@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { LoginPage, RoundsPage } from '@/pages';
+import { LoginPage, RoundsPage, RoundPage } from '@/pages';
 import { ProtectedRoute } from '@/components';
 
 function App() {
@@ -12,6 +12,14 @@ function App() {
           element={
             <ProtectedRoute>
               <RoundsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/rounds/:id"
+          element={
+            <ProtectedRoute>
+              <RoundPage />
             </ProtectedRoute>
           }
         />

@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '@/hooks';
 import { useAuthStore } from '@/stores/auth';
 
 interface LayoutProps {
   title: string;
   children: React.ReactNode;
+  centered?: boolean;
 }
 
-export function Layout({ title, children }: LayoutProps) {
-  const user = useAuthStore((state) => state.user);
+export function Layout({ title, children, centered = false }: LayoutProps) {
+  const { user } = useUser();
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
 
@@ -30,7 +32,11 @@ export function Layout({ title, children }: LayoutProps) {
           </button>
         </div>
       </header>
-      <main className="flex-1 flex items-center justify-center p-4">
+      <main
+        className={`flex-1 flex flex-col p-4 ${
+          centered ? 'items-center justify-center' : 'items-center'
+        }`}
+      >
         {children}
       </main>
     </div>
