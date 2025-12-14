@@ -1,2 +1,2 @@
-export { formatDateTime } from './date';
+export { formatDateTime, formatCountdown } from './date';
 export { getRoundStatus } from './roundStatus';
