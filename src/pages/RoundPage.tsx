@@ -53,11 +53,9 @@ export function RoundPage() {
 
     setLocalScore((prev) => (prev ?? myStats.score) + 1);
 
-    try {
-      const result = await roundsApi.tap(round.id);
-      setLocalScore(result.score);
-    } catch {
-      setLocalScore(null);
+    const result = await roundsApi.tap(round.id).catch(() => null);
+    if (result) {
+      setLocalScore((prev) => Math.max(prev ?? 0, result.score));
     }
   };
 
