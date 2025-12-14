@@ -27,7 +27,7 @@ export function RoundsPage() {
     <Layout title="ROUNDS">
       <div className="w-full max-w-2xl mt-4">
         {isAdmin && (
-          <div className="text-center mb-6">
+          <div className="mb-6">
             <button
               onClick={handleCreateRound}
               disabled={isCreating}
@@ -51,7 +51,7 @@ export function RoundsPage() {
         {data && (
           <div className="space-y-4">
             {data.data.length === 0 ? (
-              <p className="text-xs text-gray-400 text-center">No rounds available</p>
+              <p className="text-xs text-gray-400">No rounds available</p>
             ) : (
               data.data.map((round) => (
                 <RoundCard key={round.id} round={round} />
