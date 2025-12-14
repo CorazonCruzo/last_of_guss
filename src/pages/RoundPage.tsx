@@ -112,15 +112,32 @@ export function RoundPage() {
             ) : (
               <p className="text-xs text-gray-400">Round Finished</p>
             )}
-            <div className="border-t border-gray-600 pt-4 mt-4 space-y-1">
+            <div className="border-t border-gray-600 pt-4 mt-4 space-y-2">
               <p className="text-xs">Total: {round.totalScore}</p>
-              {winner && (
-                <p className={`text-xs ${isWinner ? 'text-yellow-400' : ''}`}>
-                  Winner: {getWinnerDisplayName()} ({winner.score})
-                </p>
-              )}
-              {!isAdmin && !isWinner && (
-                <p className="text-xs">My score: {myStats.score}</p>
+              {topStats.length > 0 && (
+                <div className="space-y-1 mt-4">
+                  {topStats
+                    .slice()
+                    .sort((a, b) => b.score - a.score)
+                    .map((stat, index) => {
+                      const isMe = stat.user.username === user?.username;
+                      const isFirst = index === 0;
+                      return (
+                        <p
+                          key={stat.user.username}
+                          className={`text-xs ${
+                            isFirst
+                              ? 'text-yellow-400'
+                              : isMe
+                                ? 'text-green-500'
+                                : 'text-gray-300'
+                          }`}
+                        >
+                          {index + 1}. {isMe && isNikita ? 'Nikitos' : stat.user.username} ({stat.score})
+                        </p>
+                      );
+                    })}
+                </div>
               )}
             </div>
           </div>
