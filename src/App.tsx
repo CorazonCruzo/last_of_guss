@@ -1,9 +1,24 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { LoginPage, RoundsPage } from '@/pages';
+import { ProtectedRoute } from '@/components';
+
 function App() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-      <h1 className="text-2xl">The Last of Guss</h1>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/rounds"
+          element={
+            <ProtectedRoute>
+              <RoundsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/rounds" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
