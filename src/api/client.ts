@@ -6,9 +6,12 @@ class ApiClient {
     const token = useAuthStore.getState().token;
 
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
       ...(token && { Authorization: `Bearer ${token}` }),
     };
+
+    if (options.body) {
+      headers['Content-Type'] = 'application/json';
+    }
 
     const response = await fetch(`/api/v1${endpoint}`, {
       ...options,
