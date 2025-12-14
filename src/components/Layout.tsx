@@ -9,7 +9,7 @@ interface LayoutProps {
 }
 
 export function Layout({ title, children, centered = false }: LayoutProps) {
-  const { user } = useUser();
+  const { displayName } = useUser();
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ export function Layout({ title, children, centered = false }: LayoutProps) {
       <header className="border-b-2 border-gray-700 p-4 flex justify-between items-center">
         <h1 className="text-sm">{title}</h1>
         <div className="flex items-center gap-4">
-          <span className="text-xs text-green-500">{user?.username}</span>
+          <span className="text-xs text-green-500">{displayName}</span>
           <button
             onClick={handleLogout}
             className="text-xs text-red-400 hover:text-red-300 transition-colors"
