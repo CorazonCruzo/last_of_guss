@@ -8,7 +8,7 @@ import { roundsApi } from '@/api';
 export function RoundPage() {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, error } = useRound(id!);
-  const { isAdmin } = useUser();
+  const { user, isAdmin } = useUser();
   const [localScore, setLocalScore] = useState<number | null>(null);
 
   useTick(1000);
@@ -40,6 +40,8 @@ export function RoundPage() {
     (max, stat) => (!max || stat.score > max.score ? stat : max),
     null
   );
+
+  const isWinner = winner?.user.username === user?.username;
 
   const handleTap = async () => {
     if (status !== 'active' || isAdmin) return;
@@ -102,15 +104,19 @@ export function RoundPage() {
 
         {status === 'finished' && (
           <div className="text-center space-y-2">
-            <p className="text-xs text-gray-400">Round Finished</p>
+            {isWinner ? (
+              <p className="text-sm text-yellow-400">You won!</p>
+            ) : (
+              <p className="text-xs text-gray-400">Round Finished</p>
+            )}
             <div className="border-t border-gray-600 pt-4 mt-4 space-y-1">
               <p className="text-xs">Total: {round.totalScore}</p>
               {winner && (
-                <p className="text-xs">
+                <p className={`text-xs ${isWinner ? 'text-yellow-400' : ''}`}>
                   Winner: {winner.user.username} ({winner.score})
                 </p>
               )}
-              {!isAdmin && (
+              {!isAdmin && !isWinner && (
                 <p className="text-xs">My score: {myStats.score}</p>
               )}
             </div>
