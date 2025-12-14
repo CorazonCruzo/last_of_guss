@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Layout, RoundCard } from '@/components';
-import { useRounds, useUser } from '@/hooks';
+import { useRounds, useTick, useUser } from '@/hooks';
 import { roundsApi } from '@/api';
 
 export function RoundsPage() {
   const { data, isLoading, error, refetch } = useRounds();
   const { isAdmin } = useUser();
   const [isCreating, setIsCreating] = useState(false);
+
+  // Re-render every second to update round statuses
+  useTick(1000);
 
   const handleCreateRound = async () => {
     setIsCreating(true);

@@ -13,5 +13,6 @@ export function useRounds() {
       });
       return { ...response, data: filteredData };
     },
+    refetchInterval: 10000,
   });
 }
